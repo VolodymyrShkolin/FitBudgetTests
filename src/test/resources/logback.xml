@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss} %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Глобальний рівень -->
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+    <!-- Jetty -->
+    <logger name="org.eclipse.jetty" level="WARN"/>
+    <logger name="org.eclipse.jetty.util.log" level="WARN"/>
+
+    <!-- WebDriverManager -->
+    <logger name="io.github.bonigarcia.wdm" level="WARN"/>
+
+    <!-- Selenium -->
+    <logger name="org.openqa.selenium" level="WARN"/>
+
+</configuration>

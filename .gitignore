@@ -1,0 +1,9 @@
+/bin/
+/target/
+temp_sdo_example.dbf
+*.conf
+/.allure/
+/allure-results/
+/.idea/
+*.iml
+.mvn
