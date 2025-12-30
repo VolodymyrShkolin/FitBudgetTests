@@ -37,7 +37,6 @@ public final class WebDriverFactory {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--disable-infobars");
         options.addArguments("--disable-notifications");
-        options.addArguments("--start-maximized");
 
         Map<String, Object> prefs = new HashMap<>();
 
@@ -47,14 +46,18 @@ public final class WebDriverFactory {
         options.setExperimentalOption("prefs", prefs);
 
         if (isHeadless()) {
-            options.addArguments("--headless=new");
+            options.addArguments("--headless=new",
+                    "--no-sandbox",
+                    "--disable-dev-shm-usage",
+                    "--disable-gpu",
+                    "--window-size=1920,1080");
         }
 
         return options;
     }
 
     private static boolean isHeadless() {
-        return Boolean.parseBoolean(System.getProperty("headless", "false"));
+        return Boolean.parseBoolean(System.getProperty("headless", "true"));
     }
 }
 
