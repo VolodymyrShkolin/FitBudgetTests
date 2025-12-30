@@ -121,7 +121,7 @@
                 <executions>
                     <execution>
                         <id>global-setup</id>
-                        <phase>test-compile</phase>
+                        <phase>initialize</phase>
                         <goals>
                             <goal>java</goal>
                         </goals>
