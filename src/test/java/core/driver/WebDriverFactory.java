@@ -6,6 +6,10 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
+
+import static constants.Folders.downloadsFolder;
 
 public final class WebDriverFactory {
 
@@ -25,7 +29,6 @@ public final class WebDriverFactory {
         WebDriver driver = new ChromeDriver(options);
 
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(40));
-        driver.manage().window().maximize();
 
         return driver;
     }
@@ -35,6 +38,13 @@ public final class WebDriverFactory {
         options.addArguments("--disable-infobars");
         options.addArguments("--disable-notifications");
         options.addArguments("--start-maximized");
+
+        Map<String, Object> prefs = new HashMap<>();
+
+        prefs.put("download.default_directory", downloadsFolder);
+        prefs.put("download.prompt_for_download", false);
+        prefs.put("download.directory_upgrade", true);
+        options.setExperimentalOption("prefs", prefs);
 
         if (isHeadless()) {
             options.addArguments("--headless=new");

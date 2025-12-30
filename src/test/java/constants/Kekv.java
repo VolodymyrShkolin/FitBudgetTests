@@ -4,9 +4,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public final class KekvConstants {
+public final class Kekv {
 
-    private KekvConstants() {
+    private Kekv() {
         throw new AssertionError("Cannot instantiate constants class");
     }
 

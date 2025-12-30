@@ -3,12 +3,11 @@ package steps.admin;
 import core.BaseSteps;
 import core.PageProvider;
 import core.StepFactory;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import pageObjects.adminPanel.AdminPanelPage;
+import pageObjects.data.DataSelectorsPage;
 
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,6 +15,7 @@ public class AdminPanelSteps extends BaseSteps {
     public AdminPanelSteps(WebDriver driver, PageProvider pages, StepFactory steps) {
         super(driver, pages, steps);
     }
+    DataSelectorsPage dataPage = pages.get(DataSelectorsPage.class);
 
 
     public void loginLaravel(String login, String password){
@@ -36,12 +36,9 @@ public class AdminPanelSteps extends BaseSteps {
     }
 
     public void deleteOrganization(String edrpoy){
-        String linkPath = String.format("//tr/td [text()='%s'] /../td[last()] /a", edrpoy);
-
         click(pages.get(AdminPanelPage.class).orgMenu);
-        List<WebElement> orgLinkBtns = driver.findElements(By.xpath(linkPath));
-        if(!orgLinkBtns.isEmpty()) {
-            WebElement orgLinkBtn = orgLinkBtns.getFirst();
+        if(!dataPage.getDataSelectors(edrpoy, dataPage.ORG_BUTTONS).isEmpty()) {
+            WebElement orgLinkBtn = dataPage.getDataSelectors(edrpoy, dataPage.ORG_BUTTONS).getFirst();
             scrollIntoView(orgLinkBtn);
             click(orgLinkBtn);
             click(pages.get(AdminPanelPage.class).orgSandwichMenu);

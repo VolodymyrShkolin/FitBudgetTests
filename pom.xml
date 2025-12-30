@@ -68,7 +68,7 @@
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-junit5</artifactId>
-            <version>2.20.0</version>
+            <version>2.29.1</version>
         </dependency>
         <dependency>
             <groupId>com.github.automatedowl</groupId>
@@ -99,6 +99,12 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>1.4.11</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit-pioneer</groupId>
+            <artifactId>junit-pioneer</artifactId>
+            <version>2.0.0</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -146,30 +152,78 @@
             </plugin>
 
             <!-- JUnit 5 + Parallel -->
+
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>${surefire.version}</version>
+                <version>3.2.5</version>
                 <configuration>
+
                     <useModulePath>false</useModulePath>
-                    <parallel>classes</parallel>
-                    <threadCount>5</threadCount>
+                    <testFailureIgnore>true</testFailureIgnore>
                     <failIfNoTests>false</failIfNoTests>
 
-                    <systemPropertyVariables>
-                        <allure.results.directory>
-                            ${project.build.directory}/allure-results
-                        </allure.results.directory>
-                        <junit.jupiter.extensions.autodetection.enabled>
-                            true
-                        </junit.jupiter.extensions.autodetection.enabled>
-                    </systemPropertyVariables>
+                    <excludes>
+                        <exclude>**/sequentialTests/**</exclude>
+                    </excludes>
 
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                     </argLine>
+
+                    <parallel>classes</parallel>
+                    <threadCount>5</threadCount>
+                    <rerunFailingTestsCount>2</rerunFailingTestsCount>
+
+                    <systemPropertyVariables>
+                        <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
+                        <junit.jupiter.extensions.autodetection.enabled>true</junit.jupiter.extensions.autodetection.enabled>
+                    </systemPropertyVariables>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>3.2.5</version>
+
+                <executions>
+                    <execution>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>integration-test</goal>
+                        </goals>
+                        <configuration>
+                            <useModulePath>false</useModulePath>
+                            <skipAfterFailureCount>0</skipAfterFailureCount>
+
+                            <includes>
+                                <include>**/sequentialTests/ExampleSeqTests.java</include>
+                            </includes>
+
+                            <argLine>
+                                -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                            </argLine>
+
+                            <systemPropertyVariables>
+                                <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
+                                <junit.jupiter.execution.parallel.enabled>false</junit.jupiter.execution.parallel.enabled>
+                            </systemPropertyVariables>
+
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>verify</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
 
             <!-- Allure -->
             <plugin>

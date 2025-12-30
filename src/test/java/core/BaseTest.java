@@ -26,6 +26,7 @@ public abstract class BaseTest implements ConfigProvider{
         driver = WebDriverFactory.createDriver(BrowserType.CHROME);
         pages = new PageProvider(driver);
         steps = new StepFactory(driver, pages);
+        driver.get(URL_DEV);
     }
 
 

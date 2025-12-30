@@ -12,4 +12,8 @@ public class ModuleMenuPage extends BasePage {
 
     @FindBy(css = "[data-qa-id='navigation-menu-work-with-dksy']")
     public WebElement dksu;
+    @FindBy(css = "[data-qa-id='navigation-menu-salary-navigation']")
+    public WebElement salary;
+    @FindBy(css = "[data-qa-id='navigation-menu-reports-navigation']")
+    public WebElement reports;
 }

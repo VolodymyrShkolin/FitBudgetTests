@@ -1,4 +1,4 @@
-package steps.oprationManagement;
+package steps.goTo;
 
 import core.BaseSteps;
 import core.PageProvider;
@@ -13,9 +13,9 @@ import pageObjects.login.MainPage;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
-public class DevPanelManagementSteps extends BaseSteps {
+public class GoToDevPanelSteps extends BaseSteps {
 
-    public DevPanelManagementSteps(WebDriver driver, PageProvider pages, StepFactory steps) {
+    public GoToDevPanelSteps(WebDriver driver, PageProvider pages, StepFactory steps) {
         super(driver, pages, steps);
     }
 

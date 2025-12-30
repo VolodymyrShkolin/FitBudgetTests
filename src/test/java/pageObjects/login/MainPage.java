@@ -922,6 +922,8 @@ public class MainPage extends BasePage {
     public WebElement modalHeader;
     @FindBy(css = "[data-qa-id='tab-content'] [data-qa-id='field-quantity']")
     public WebElement quantityField;
+    @FindBy(css = "[data-qa-id='tab-content'] [data-qa-id='open-catalog-view-20022-btn']")
+    public WebElement objectTypeBtn;
 
     //transaction arrows
     @FindBy(xpath = ".//button[not(self::node()[@disabled=''])][contains(@data-qa-id,'replace-analytics-with-debit')]")
