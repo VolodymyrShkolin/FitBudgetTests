@@ -6,8 +6,6 @@ import core.StepFactory;
 import io.qameta.allure.Step;
 import org.junit.jupiter.api.DisplayName;
 import org.openqa.selenium.WebDriver;
-import pageObjects.link.ModuleMenuPage;
-import pageObjects.salary.SalaryOperationsLinksPage;
 
 @DisplayName("Переід до операцій модуля Звіти")
 public class GoToReportsSteps extends BaseSteps {
@@ -17,8 +15,8 @@ public class GoToReportsSteps extends BaseSteps {
 
     @Step("Перейти до звіту Журнал проводок")
     public void goToJournalOfPostings(){
-        click(pages.get(ModuleMenuPage.class).reports);
-        click(pages.get(SalaryOperationsLinksPage.class).journalOfPostingsLink);
+        click(pages.moduleMenuPage().reports);
+        click(pages.salaryOperationsLinksPage().journalOfPostingsLink);
 
     }
 }

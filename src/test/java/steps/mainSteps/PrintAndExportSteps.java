@@ -6,24 +6,15 @@ import core.StepFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.FluentWait;
-import pageObjects.login.MainPage;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.attribute.BasicFileAttributes;
 import java.time.Duration;
-import java.time.Instant;
-import java.time.LocalTime;
-import java.time.ZoneId;
-import java.util.Objects;
 
 import static constants.Folders.downloadsFolder;
 import static constants.Print.html;
 import static constants.Print.pdf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static steps.mainSteps.DatepickerSteps.yyyyMMdd;
 
 public class PrintAndExportSteps extends BaseSteps {
     public PrintAndExportSteps(WebDriver driver, PageProvider pages, StepFactory steps) {
@@ -33,58 +24,41 @@ public class PrintAndExportSteps extends BaseSteps {
     public static FluentWait<File> filesWait;
 
 
-     public void specPrint(String btnType, String fileName, WebElement printBtn) {
+     public void print(String btnType, String fileName, WebElement printBtn) {
         click(printBtn);
         switch (btnType){
-            case html -> click(pages.get(MainPage.class).printHtmlButton);
-            case pdf -> click(pages.get(MainPage.class).printPdfBtn);
+            case html -> click(pages.mainPage().printHtmlButton);
+            case pdf -> click(pages.mainPage().printPdfBtn);
         }
 
-        fileSpecVerifier(fileName);
+         verifyFileDownloaded(fileName);
     }
 
 
-    private void fileSpecVerifier(String fileName){
-        File downloads = new File(downloadsFolder);
-        boolean downloaded = false;
-        try {
-            filesWait = new FluentWait<>(downloads)
-                    .withTimeout(Duration.ofSeconds(15))
-                    .pollingEvery(Duration.ofMillis(1500))
-                    .ignoring(Exception.class)
-                    .withMessage("file is not downloaded");
-            filesWait.until(f -> Objects.requireNonNull(f.list()).length > 0);
+    private void verifyFileDownloaded(String expectedPrefix) {
+        File downloadDir = new File(downloadsFolder);
+        assertTrue(downloadDir.exists(), "Downloads folder does not exist");
 
-            for (File f : Objects.requireNonNull(downloads.listFiles())) {
-                if(f.getName().startsWith(fileName)){
-                    downloaded = true;
-                    break;
-                }
-            }
+        FluentWait<File> wait = new FluentWait<>(downloadDir)
+                .withTimeout(Duration.ofSeconds(20))
+                .pollingEvery(Duration.ofMillis(500))
+                .ignoring(Exception.class)
+                .withMessage("File was not downloaded: " + expectedPrefix);
 
-        } finally {
-            for (File f : downloads.listFiles()) {
-                if(f.getName().startsWith(fileName)){
-                    f.delete();
-                }
-            }
-            assertTrue(downloaded, "File wasn't downloaded!");
-            deleteOldFile(downloads);
+        File downloadedFile = wait.until(dir -> {
+            File[] files = dir.listFiles((d, name) ->
+                    name.startsWith(expectedPrefix)
+                            && !name.endsWith(".crdownload")
+            );
+            return (files != null && files.length > 0) ? files[0] : null;
+        });
+
+        assertNotNull(downloadedFile, "Downloaded file not found");
+
+        // cleanup тільки свого файлу
+        if (!downloadedFile.delete()) {
+            System.out.println("Warning: cannot delete file " + downloadedFile.getName());
         }
     }
 
-
-    private void deleteOldFile(File file){
-        for (File f : file.listFiles()) {
-            try {
-                BasicFileAttributes attr = Files.readAttributes(Path.of(String.valueOf(f)), BasicFileAttributes.class);
-                String createFileTimeMM = String.valueOf(attr.creationTime()).substring(0,16);
-                LocalTime time = LocalTime.ofInstant(Instant.now(), ZoneId.of("Europe/Kiev"));
-                String downTime = "T"+time.toString().substring(0, 4); //10 min old
-                if(!createFileTimeMM.startsWith(yyyyMMdd.format(currentDate)+downTime)){
-                    f.delete();}
-            } catch (IOException e) {
-                throw new RuntimeException(e);}
-        }
-    }
 }

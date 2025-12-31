@@ -9,9 +9,6 @@ import lombok.SneakyThrows;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import pageObjects.dksu.FinObligationPage;
-import pageObjects.login.MainPage;
-import steps.goTo.GoToDksuSteps;
 
 public class ElementsSteps extends BaseSteps {
     public ElementsSteps(WebDriver driver, PageProvider pages, StepFactory steps) {
@@ -21,11 +18,11 @@ public class ElementsSteps extends BaseSteps {
     @SneakyThrows
     @Step("Ââ³ä çíà÷åííÿ â ³íëàéíîâå ïîëå")
     public void inlineLoader() {
-        steps.get(GoToDksuSteps.class).goToFinObligation();
-        click(pages.get(FinObligationPage.class).BtnAddFinOblig);
-        type(pages.get(FinObligationPage.class).kekvInput, Kekv.KEKV.getFirst());
-        wait.until(ExpectedConditions.visibilityOfAllElements(pages.get(MainPage.class).catalogField³Search));
-        pages.get(FinObligationPage.class).kekvInput.sendKeys(Keys.chord(Keys.ENTER));
-        wait.until(d -> Kekv.KEKV.getFirst().equals(pages.get(FinObligationPage.class).kekvInput.getDomProperty("value")));
+        steps.goToDksuSteps().goToFinObligation();
+        click(pages.finObligationPage().BtnAddFinOblig);
+        type(pages.finObligationPage().kekvInput, Kekv.KEKV.getFirst());
+        wait.until(ExpectedConditions.visibilityOfAllElements(pages.mainPage().catalogFieldsSearch));
+        pages.finObligationPage().kekvInput.sendKeys(Keys.chord(Keys.ENTER));
+        wait.until(d -> Kekv.KEKV.getFirst().equals(pages.finObligationPage().kekvInput.getDomProperty("value")));
     }
 }

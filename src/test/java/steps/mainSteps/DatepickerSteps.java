@@ -6,7 +6,6 @@ import core.StepFactory;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import pageObjects.login.MainPage;
 
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -38,8 +37,8 @@ public class DatepickerSteps extends BaseSteps {
     @Step("¬становленн€ повного м≥с€ц€")
     public void setFullMonth(WebElement firsDay, WebElement lastDay){
         click(firsDay);
-        click(pages.get(MainPage.class).day.getFirst());
+        click(pages.mainPage().day.getFirst());
         click(lastDay);
-        click(pages.get(MainPage.class).day.getLast());
+        click(pages.mainPage().day.getLast());
     }
 }

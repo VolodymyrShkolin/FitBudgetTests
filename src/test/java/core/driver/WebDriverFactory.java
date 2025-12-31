@@ -47,14 +47,20 @@ public final class WebDriverFactory {
         options.setExperimentalOption("prefs", prefs);
 
         if (isHeadless()) {
-            options.addArguments("--headless=new");
+            options.addArguments(
+                    "--headless=new",
+                    "--window-size=1920,1080",
+                    "--disable-gpu",
+                    "--disable-dev-shm-usage",
+                    "--no-sandbox"
+            );
         }
 
         return options;
     }
 
     private static boolean isHeadless() {
-        return Boolean.parseBoolean(System.getProperty("headless", "false"));
+        return Boolean.parseBoolean(System.getProperty("headless", "true"));
     }
 }
 

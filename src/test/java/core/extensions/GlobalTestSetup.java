@@ -10,7 +10,6 @@ import core.driver.WebDriverFactory;
 import java.io.File;
 
 import org.openqa.selenium.WebDriver;
-import steps.admin.AdminPanelSteps;
 
 
 public final class GlobalTestSetup {
@@ -28,16 +27,16 @@ public final class GlobalTestSetup {
             loginByBasicAuth(driver, config);
 
 
-            steps.get(AdminPanelSteps.class).loginLaravel(
+            steps.adminPanelSteps().loginLaravel(
                     config.getString("adminPanel.laravelForm.login"),
                     config.getString("adminPanel.laravelForm.password")
             );
 
-            steps.get(AdminPanelSteps.class).reloadDatabase(
+            steps.adminPanelSteps().reloadDatabase(
                     config.getString("usersParams.accMain.edrpoy")
             );
 
-            steps.get(AdminPanelSteps.class).deleteOrganization(
+            steps.adminPanelSteps().deleteOrganization(
                     config.getString("usersParams.newUser.edrpoy")
             );
 

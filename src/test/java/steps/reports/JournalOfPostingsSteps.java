@@ -5,11 +5,6 @@ import core.PageProvider;
 import core.StepFactory;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
-import pageObjects.login.MainPage;
-import steps.goTo.GoToReportsSteps;
-import steps.mainSteps.CatalogSteps;
-import steps.mainSteps.DatepickerSteps;
-import steps.mainSteps.PrintAndExportSteps;
 
 import static constants.Print.html;
 import static constants.Print.pdf;
@@ -25,12 +20,12 @@ public class JournalOfPostingsSteps extends BaseSteps {
     public void journalOfPosting(){
         String fileName = "download_" + yyyyMMdd.format(currentDate) + ukrTime;
 
-        steps.get(GoToReportsSteps.class).goToJournalOfPostings();
-        steps.get(CatalogSteps.class).selectRandomData(pages.get(MainPage.class).objectTypeBtn);
-        steps.get(DatepickerSteps.class).setFullMonth(
-                pages.get(MainPage.class).calendarIcn.getFirst(),
-                pages.get(MainPage.class).calendarIcn.get(1));
-        steps.get(PrintAndExportSteps.class).specPrint(html, fileName, pages.get(MainPage.class).printBtn2);
-        steps.get(PrintAndExportSteps.class).specPrint(pdf, fileName, pages.get(MainPage.class).printBtn2);
+        steps.goToReportsSteps().goToJournalOfPostings();
+        steps.catalogSteps().selectRandomData(pages.mainPage().objectTypeBtn);
+        steps.datepickerSteps().setFullMonth(
+                pages.mainPage().calendarIcn.getFirst(),
+                pages.mainPage().calendarIcn.get(1));
+        steps.printAndExportSteps().print(html, fileName, pages.mainPage().printBtn2);
+        steps.printAndExportSteps().print(pdf, fileName, pages.mainPage().printBtn2);
     }
 }

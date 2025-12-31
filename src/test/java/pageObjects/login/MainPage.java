@@ -948,7 +948,7 @@ public class MainPage extends BasePage {
     @FindBy(xpath = ".//button[not(self::node()[@disabled=''])][contains(@data-qa-id,'replace-analytics-with-credit')] /..//div/button")
     public List<WebElement> availableCreditBtn;
     @FindBy(css = "[data-qa-id='tab-content'] .catalog-field-search")
-    public List<WebElement> catalogField³Search;
+    public List<WebElement> catalogFieldsSearch;
     @FindBy(css = "[data-qa-id='tab-content'] .catalog-field-search")
     public WebElement catalogFieldSearch;
 }

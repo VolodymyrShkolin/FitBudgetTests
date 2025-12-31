@@ -7,8 +7,6 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import pageObjects.devPanel.DevPage;
-import pageObjects.login.MainPage;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -22,9 +20,9 @@ public class GoToDevPanelSteps extends BaseSteps {
     @Step("Go to All catalogs list")
     public void goToAllCatalogList(){
         devPageCalling();
-        click(pages.get(DevPage.class).allCatalogListLink);
+        click(pages.devPage().allCatalogListLink);
         wait.until(ExpectedConditions.textToBePresentInElement(
-                pages.get(MainPage.class).pageHeader,
+                pages.mainPage().pageHeader,
                 "Development catalogs"
         ));
     }
@@ -32,23 +30,23 @@ public class GoToDevPanelSteps extends BaseSteps {
     @Step("Go to Catalogs choice table")
     public void goToCatalogsChoiceTable(){
         devPageCalling();
-        click(pages.get(DevPage.class).catalogChoiceTableLink);
-        assertTrue(isVisible(pages.get(MainPage.class).exitButton));
+        click(pages.devPage().catalogChoiceTableLink);
+        assertTrue(isVisible(pages.mainPage().exitButton));
     }
 
     @Step("Go to Generation-from-html")
     public void goToGenerationFromHtml(){
         devPageCalling();
-        pages.get(DevPage.class).genFromHtmlLink.click();
-        assertTrue(isVisible(pages.get(DevPage.class).componentOfCoreHtml));
+        pages.devPage().genFromHtmlLink.click();
+        assertTrue(isVisible(pages.devPage().componentOfCoreHtml));
     }
 
     @Step("Go to Inputs")
     public void goToInputs(){
         devPageCalling();
-        pages.get(DevPage.class).inputsLink.click();
+        pages.devPage().inputsLink.click();
         wait.until(ExpectedConditions.textToBePresentInElement(
-                pages.get(MainPage.class).pageHeader,
+                pages.mainPage().pageHeader,
                 "Development all inputs for test"
         ));
     }
@@ -56,38 +54,38 @@ public class GoToDevPanelSteps extends BaseSteps {
     @Step("Go to Rest - split-html")
     public void goToRestSplitHtml(){
         devPageCalling();
-        pages.get(DevPage.class).restSplitHtmlLink.click();
-        assertTrue(isVisible(pages.get(DevPage.class).elemSplit));
+        pages.devPage().restSplitHtmlLink.click();
+        assertTrue(isVisible(pages.devPage().elemSplit));
     }
 
     @Step("Tables - default")
     public void goToTablesDefault(){
         devPageCalling();
-        pages.get(DevPage.class).tablesDefaultLink.click();
-        assertTrue(isVisible(pages.get(DevPage.class).tableWrapper));
+        pages.devPage().tablesDefaultLink.click();
+        assertTrue(isVisible(pages.devPage().tableWrapper));
 
     }
 
     @Step("Tables - sum")
     public void goToTablesSum(){
         devPageCalling();
-        pages.get(DevPage.class).tablesSumLink.click();
-        assertTrue(isVisible(pages.get(DevPage.class).tableWrapper));
+        pages.devPage().tablesSumLink.click();
+        assertTrue(isVisible(pages.devPage().tableWrapper));
     }
 
     @Step("Tables - validation")
     public void goToTablesValidation(){
         devPageCalling();
-        pages.get(DevPage.class).tablesValidationLink.click();
-        assertTrue(isVisible(pages.get(DevPage.class).tableWrapper));
+        pages.devPage().tablesValidationLink.click();
+        assertTrue(isVisible(pages.devPage().tableWrapper));
     }
 
 
 
     @Step("Ctrl + F2 click")
     private void devPageCalling(){
-        click(pages.get(MainPage.class).appSearch);
-        isVisible(pages.get(MainPage.class).appSearchInput);
-        type(pages.get(MainPage.class).appSearchInput, Keys.chord(Keys.CONTROL, Keys.F2));
+        click(pages.mainPage().appSearch);
+        isVisible(pages.mainPage().appSearchInput);
+        type(pages.mainPage().appSearchInput, Keys.chord(Keys.CONTROL, Keys.F2));
     }
 }

@@ -6,7 +6,6 @@ import core.StepFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import pageObjects.login.MainPage;
 
 import java.util.List;
 
@@ -17,8 +16,8 @@ public class CatalogSteps extends BaseSteps {
 
     public void selectRandomData(WebElement catalogBtn){
         click(catalogBtn);
-        randomSelection(pages.get(MainPage.class).catalogListObjectNew);
-        click(pages.get(MainPage.class).selectListBtn);
+        randomSelection(pages.mainPage().catalogListObjectNew);
+        click(pages.mainPage().selectListBtn);
 
     }
 
